@@ -1,5 +1,5 @@
-const isObject = (item) => {
-  return item && typeof item === "object" && !Array.isArray(item);
+const isObject = (item: any) => {
+  return item && typeof item === 'object' && !Array.isArray(item);
 };
 
 /**
@@ -7,7 +7,10 @@ const isObject = (item) => {
  * @param target
  * @param source
  */
-const mergeDeep = (target, source) => {
+const mergeDeep = (
+  target: { [x: string]: any; h1?: {}; h2?: {}; h3?: {}; h4?: {}; h5?: {}; h6?: {}; text?: {} },
+  source: { [x: string]: any }
+) => {
   let output = Object.assign({}, target);
   if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach((key) => {
@@ -22,4 +25,4 @@ const mergeDeep = (target, source) => {
   return output;
 };
 
-module.exports = mergeDeep;
+export default mergeDeep;

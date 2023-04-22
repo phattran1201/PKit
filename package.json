@@ -1,11 +1,9 @@
 {
   "name": "@phattran1201/rn-kit",
-  "version": "0.0.1",
-  "description": "Simple and easy to integrate common layout components for react native",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "0.0.2",
+  "description": "Đơn giản và dễ dàng tích hợp các thành phần bố cục chung cho React Native",
+  "main": "index.tsx",
+  "scripts": {},
   "keywords": [
     "phattran1201",
     "dauphaiphat",
@@ -23,11 +21,22 @@
   ],
   "author": "phattran1201",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": false,
   "peerDependencies": {
-    "react-native": ">=0.20.0"
+    "lodash": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.194",
+    "@types/react": "^18.0.38",
+    "@types/react-native": "^0.71.6",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.7",
+    "react-native": "^0.71.7",
+    "typescript": "^5.0.4"
   },
   "repository": {
     "type": "git",
