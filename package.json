@@ -1,0 +1,40 @@
+{
+  "name": "@phattran1201/rn-kit",
+  "version": "0.0.1",
+  "description": "Simple and easy to integrate common layout components for react native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "phattran1201",
+    "dauphaiphat",
+    "react-native",
+    "layout",
+    "elements",
+    "boilerplate",
+    "grid",
+    "flexbox",
+    "react-native-component",
+    "react-component",
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "author": "phattran1201",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.20.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phattran1201/rn-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phattran1201/rn-kit/issues"
+  },
+  "homepage": "https://github.com/phattran1201/rn-kit#readme"
+}
