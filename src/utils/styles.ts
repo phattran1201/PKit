@@ -1,4 +1,4 @@
-export const styles = {
+const STYLES = {
   h1: {},
   h2: {},
   h3: {},
@@ -7,9 +7,11 @@ export const styles = {
   h6: {},
   text: {},
 };
-export const styleVariables = {
+const STYLE_VARIABLES = {
+  // fontFamily: '',
   color: '#333',
   fontSize: 14,
   gutter: 10,
   paddingVertical: 10,
 };
+export { STYLES, STYLE_VARIABLES };

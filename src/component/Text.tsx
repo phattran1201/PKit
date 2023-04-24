@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text as RNText } from 'react-native';
 import mergeDeep from '../utils/merge';
-import { styleVariables as _styleVariables, styles as _styles } from '../utils/styles';
+import { STYLE_VARIABLES, STYLES } from '../utils/styles';
 import { responsiveFontSize } from '../utils/scaling-utils';
 
 interface StyleVariables {
@@ -9,13 +9,19 @@ interface StyleVariables {
   color: string;
 }
 
-const styleVariables: StyleVariables = Object.assign(_styleVariables, {});
-const stylesheet = StyleSheet.create(_styles as any);
+const styleVariables: StyleVariables = Object.assign(STYLE_VARIABLES, {});
+const stylesheet = StyleSheet.create(STYLES);
 
-// Các biến và kiểu kiểu kiểu hợp nhất
+/**
+ * Initializes the styles and variables for the app.
+ * @param {object} styles - Custom styles to override default styles.
+ * @param {object} variables - Custom variables to override default variables.
+ */
 const init = (styles = {}, variables = {}) => {
+  // Merge the custom variables with the default variables
   Object.assign(styleVariables, variables);
-  Object.assign(stylesheet, StyleSheet.create(mergeDeep(_styles, styles)));
+  // Merge the custom styles with the default styles and create a stylesheet
+  Object.assign(stylesheet, StyleSheet.create(mergeDeep(STYLES, styles)));
 };
 
 const Text = ({ children, style, ...props }: { children: ReactNode; style?: any }) => (

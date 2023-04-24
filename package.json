@@ -1,6 +1,6 @@
 {
   "name": "@phattran1201/rn-kit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Đơn giản và dễ dàng tích hợp các thành phần bố cục chung cho React Native",
   "main": "index.tsx",
   "scripts": {},

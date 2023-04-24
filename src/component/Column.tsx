@@ -17,7 +17,19 @@ export interface ColumnType extends React.ForwardRefExoticComponent<ColumnProps>
   transitionTo: (object: object) => void;
 }
 
-export const compareProps = (previousProps: any, newProps: any, compareProps: Array<string>) => {
+/**
+ * Compares specific properties between two objects to determine equality.
+ *
+ * @param {Object} previousProps - The previous object to compare.
+ * @param {Object} newProps - The new object to compare.
+ * @param {string[]} compareProps - The properties to compare between the two objects.
+ * @return {boolean} - True if all specified properties between the two objects are equal; false otherwise.
+ */
+export const compareProps = (
+  previousProps: any,
+  newProps: any,
+  compareProps: Array<string>
+): boolean => {
   let _isEqual = true;
   map(compareProps, (prop: string | number) => {
     if (!isEqual(previousProps[prop], newProps[prop])) {
@@ -26,65 +38,40 @@ export const compareProps = (previousProps: any, newProps: any, compareProps: Ar
   });
   return _isEqual;
 };
-
+/**
+ * Interface for Column component props.
+ */
 export interface ColumnProps {
   children?: JSX.Element | JSX.Element[] | React.ReactNode | React.ReactNodeArray;
-  // Style
-  style?: StyleProp<ViewStyle>;
-  // Component
-  Component?: any;
-  // Push the child items to the left
-  leftContent?: boolean;
-  // Push the child items to the right
-  rightContent?: boolean;
-  // Push sub-items to the bottom
-  bottomContent?: boolean;
-  // Horizontal center
-  centerHorizontal?: boolean;
-  // Vertical center
-  centerVertical?: boolean;
-  // Căn giữa cả 2 hướng
-  center?: boolean;
-  // Horizontal and long fill of parent View
-  fillParent?: boolean;
-  // Horizontal Fill
-  fillWidth?: boolean;
-  // Fill height
-  fillHeight?: boolean;
-  // Shrink
-  shrink?: boolean;
-  // wrap
-  wrap?: boolean;
-
-  componentRef?: any;
-  // onPress
-  onPress?: (event: GestureResponderEvent) => void;
-  onLongPress?: () => void;
-  getRef?: () => void;
-  getComponentRef?: (ref: any) => void;
-  // Shadow level
-  shadowLevel?: number;
-  // Press quickly without delay
-  fast?: boolean;
-  // Without feeback
-  noFeedback?: boolean;
-
-  // Using the library react-native-animatable
-  animatable?: boolean;
-  // Use native drivers
-  useNativeDriver?: boolean;
-  // Run the effect endlessly
-  infinite?: boolean;
-  [x: string]: any;
-
-  // Row Mode
-  row?: boolean;
-  // Not allow to re-render
-  disableRerender?: boolean;
-  // chỉ vẻ lại khi prop thay đổi
-  rerenderOnPropsChange?: Array<string>;
-  // Extra Data
-  extraData?: any;
+  style?: StyleProp<ViewStyle>; // Style of the component
+  Component?: any; // Component used by Column
+  leftContent?: boolean; // Push the child items to the left
+  rightContent?: boolean; // Push the child items to the right
+  bottomContent?: boolean; // Push sub-items to the bottom
+  centerHorizontal?: boolean; // Horizontal center
+  centerVertical?: boolean; // Vertical center
+  center?: boolean; // Center both horizontally and vertically
+  fillParent?: boolean; // Horizontal and long fill of parent View
+  fillWidth?: boolean; // Horizontal fill
+  fillHeight?: boolean; // Fill height
+  shrink?: boolean; // Shrink
+  wrap?: boolean; // Wrap text
+  componentRef?: any; // Ref to pass to the component
+  onPress?: (event: GestureResponderEvent) => void; // Press event handler
+  onLongPress?: () => void; // Long press event handler
+  getRef?: () => void; // Ref getter
+  getComponentRef?: (ref: any) => void; // Component ref getter
+  shadowLevel?: number; // Shadow level
+  fast?: boolean; // Press quickly without delay
+  noFeedback?: boolean; // Without feedback
+  animatable?: boolean; // Use react-native-animatable library
+  useNativeDriver?: boolean; // Use native drivers
+  infinite?: boolean; // Run the animation endlessly
+  [x: string]: any; // Additional props
+  row?: boolean; // Row mode
+  disableRerender?: boolean; // Prevent re-rendering
+  rerenderOnPropsChange?: Array<string>; // Re-render on prop changes
+  extraData?: any; // Extra data
   animationOnPress?:
     | 'bounce'
     | 'flash'
@@ -96,9 +83,12 @@ export interface ColumnProps {
     | 'swing'
     | 'tada'
     | 'wobble'
-    | any;
+    | any; // Animation type on press event
 }
 
+/**
+ * A memoized Column component with props.
+ */
 const Column = React.memo(
   (props: ColumnProps): JSX.Element => {
     const {

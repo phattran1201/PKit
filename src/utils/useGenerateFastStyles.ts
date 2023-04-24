@@ -1,6 +1,7 @@
-import { concat, first, flatten, map, omit, parseInt, replace, size } from 'lodash';
+import { List, Omit, concat, first, flatten, map, omit, parseInt, replace, size } from 'lodash';
 import { useCallback, useMemo } from 'react';
 
+// Function to generate a shadow style object
 const generateShadowStyle = ({
   shadowColor,
   elevation,
@@ -20,6 +21,7 @@ const generateShadowStyle = ({
   };
 };
 
+// Object containing fast styles for generating styles quickly based on shorthand notations
 const FAST_STYLES = {
   //! style -
   'bW-{number}': (numb: number) => {
@@ -313,74 +315,70 @@ const FAST_STYLES = {
   },
 };
 
-const generateFastStyles = (props: any) => {
-  var style: any = [];
+/**
+ * Generates an array of styles based on the provided props and FAST_STYLES object.
+ * @param {Object} props - The props object.
+ * @param {boolean} props.absolute - Determines if the position should be absolute.
+ * @returns {Array} - The generated styles array.
+ */
+const generateFastStyles = (props: Omit<any, 'children'>): Array<any> => {
+  let styles: List<any> | null | undefined = [];
 
+  // If the absolute prop is true, add absolute positioning to the styles array.
   if (props.absolute) {
-    style = [
-      {
-        position: 'absolute',
-      },
-    ];
+    styles = [{ position: 'absolute' }];
   }
 
-  map(omit(FAST_STYLES, ['children', 'style', 'containerStyle']), (cb, key) => {
-    const regex = new RegExp(replace(key, '{number}', '[0-9]+'));
-    map(props, (_value, key) => {
-      if (regex.test(key)) {
+  // Iterate through each key in the FAST_STYLES object.
+  map(omit(FAST_STYLES, ['children', 'style', 'containerStyle']), (styleCallback, styleKey) => {
+    // Create a regex pattern to match props that correspond to the current style key.
+    const regex = new RegExp(replace(styleKey, '{number}', '[0-9]+'));
+
+    // Iterate through each prop in the props object.
+    map(props, (value, propKey) => {
+      // If the current prop matches the regex pattern, extract the number from the prop key.
+      if (regex.test(propKey)) {
         const numberRegex = new RegExp('[0-9]+');
-        const matches = numberRegex.exec(key);
-        var number = 0;
+        const matches = numberRegex.exec(propKey);
+        let number = 0;
 
         if (size(matches) > 0) {
           number = parseInt(first(matches) || '');
         }
 
-        style = concat(style, (cb && number && cb(number)) || {});
+        // Call the style callback function with the extracted number and add the result to the styles array.
+        styles = concat(styles, (styleCallback && number && styleCallback(number)) || {});
       }
     });
   });
-  return flatten(style);
-};
-export interface FastStyleProps {
-  // Push the child items to the left
-  leftContent?: boolean;
-  // Push the child items to the right
-  rightContent?: boolean;
-  // Push sub-items to the bottom
-  bottomContent?: boolean;
-  // Horizontal center
-  centerHorizontal?: boolean;
-  // Vertical center
-  centerVertical?: boolean;
-  // Căn giữa cả 2 hướng
-  center?: boolean;
-  // Horizontal and long fill of parent View
-  fillParent?: boolean;
-  // Horizontal Fill
-  fillWidth?: boolean;
-  // Fill height
-  fillHeight?: boolean;
-  // Shrink
-  shrink?: boolean;
-  // wrap
-  wrap?: boolean;
-  // type of STYLES
-  [x: string]: any;
-}
 
-function useGenerateFastStyles(props: any) {
+  return flatten(styles);
+};
+
+/**
+ * Generate fast styles based on the given props object. Fast styles are shorthand
+ * CSS properties that allow for quick styling, such as 'mT8' for 'margin-top: 8px;'
+ *
+ * @param props - The props object to generate fast styles from
+ * @returns The generated fast styles object
+ */
+function useGenerateFastStyles(props: Omit<any, 'children'>): Array<any> {
   // Style nhanh, ví dụ mT8 absolute mL6 ..
   const fastStyle = useMemo(() => {
+    // Generate fast styles, omitting the 'children' prop
     return generateFastStyles(omit(props, ['children']));
   }, [omit(props, ['children'])]);
-  // mer styles
-  const createStyles = useCallback(() => [{ flex: 1 }, fastStyle, props?.style], [props?.style]);
-  // Tạo styles
+
+  const createStyles = useCallback(() => {
+    // Merge fast styles with the 'style' prop, and add a 'flex: 1' property
+    return [{ flex: 1 }, fastStyle, props?.style];
+  }, [props?.style]);
+
   const _styles = useMemo(() => {
+    // Generate the final styles object by calling createStyles()
     return createStyles();
   }, [__DEV__ ? props : props?.style]);
 
   return _styles;
 }
-export { generateShadowStyle, generateFastStyles, useGenerateFastStyles };
+export { generateFastStyles, generateShadowStyle, useGenerateFastStyles };
